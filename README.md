@@ -236,7 +236,6 @@ Each CSV contains columns: `x, y, z, qx, qy, qz, qw, Result`
 
 ## Notes
 
-- The original `combined_classifier.py` is preserved for reference
 - URDF files are organized in `urdf_files/` folder
 - All paths are configured to work from the project root
 - The simulation uses PyBullet's GUI by default
@@ -245,7 +244,7 @@ Each CSV contains columns: `x, y, z, qx, qy, qz, qw, Result`
 
 ## Extension Task: Robotic Arm Reachability Analysis (Bonus Part)
 
-The `robo arm (bonus part)/` folder contains an extension task that analyzes the reachability workspace of a Panda robotic arm using inverse kinematics and machine learning classifiers.
+The `robo arm (bonus part)/` folder contains our extension task that analyses the workspace of a Panda robotic arm using inverse kinematics.
 
 ### Overview
 
@@ -293,7 +292,7 @@ python reachability_classifier_LogReg.py
 
 This script:
 - Loads the reachability dataset
-- Visualizes success/failure positions (scatter plot)
+- Visualises success/failure positions (scatter plot)
 - Performs grid search to find optimal hyperparameters
 - Trains Logistic Regression with polynomial features
 - Displays accuracy, confusion matrix, and classification report
@@ -325,17 +324,12 @@ This script:
 
 ### Dependencies for Extension Task
 
-The extension task uses the same dependencies as the main project. Ensure you have installed:
-```bash
-pip install -r requirements.txt
-```
-
-Additional visualization will use `matplotlib` (included in requirements).
+The extension task uses the same dependencies as the main project
 
 ### Understanding the Results
 
 - **Scatter plots** show the distribution of reachable (green) vs unreachable (red) positions
-- **Decision boundary** visualizes the classifier's learned workspace boundary
+- **Decision boundary** visualises the classifier's learned workspace boundary
 - **Accuracy metrics** indicate how well the classifier predicts reachability
 - The workspace is typically bounded by the arm's joint limits and physical constraints
 
