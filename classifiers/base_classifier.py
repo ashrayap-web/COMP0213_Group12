@@ -16,7 +16,6 @@ class BaseClassifier(ABC):
         """Load CSV and balance the dataset"""
         df = pd.read_csv(self.csvfile)
         min_n = df["Result"].value_counts().min()
-        print(f"Balancing dataset: {min_n} samples per class")
         balanced_df = df.groupby("Result", group_keys=False).sample(n=min_n, random_state=42)
         
         X = balanced_df.drop(columns=["Result"])
