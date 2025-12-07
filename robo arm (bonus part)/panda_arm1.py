@@ -88,8 +88,6 @@ class PandaArm:
 
     def move_ee(self, target_pos, target_orn=None, steps=150):
 
-        #target_orn = target_orn or p.getQuaternionFromEuler([np.pi, 0.0, 0.0])
-
         if target_orn is None:
 
             joint_positions = p.calculateInverseKinematics(
@@ -130,7 +128,6 @@ class PandaArm:
 
     def pick(self, obj: CubeObject, target_orn=None):
 
-        #obj_pos, _ = p.getBasePositionAndOrientation(obj.body_id)
         obj.start_pos = obj.get_pos()
         self.grasp_h = obj.start_pos[2] + 0.015
         aproach_h = self.grasp_h + 0.01
@@ -162,7 +159,7 @@ class PandaArm:
             print(f"\033[31m{obj.name}: FAILURE\033[0m")
             return 0.0
 
-# to do
+
 class Simulation:
     def __init__(self, collect_data):
 
@@ -214,7 +211,7 @@ if __name__ == "__main__":
 
         sim.reset_sim()
 
-        #cube_pos = [0.626147, -0.474556, 0.025]
+        # load object
         cube = CubeObject(f"cube{i}", init_pos=None)
         sim.step()
 
@@ -232,7 +229,7 @@ if __name__ == "__main__":
 
     p.disconnect()
 
-    cols = ["x","y","Result"] # no z since constant (0.024988)
+    cols = ["x","y","Result"] # no z since constant (z=0.024988)
 
     df = pd.DataFrame(data, columns=cols)
     print(df.head(),"\n")
@@ -240,4 +237,4 @@ if __name__ == "__main__":
     print(df["Result"].value_counts())
 
     if COLLECT_DATA:
-        df.to_csv("arm_reachability_down.csv", index=False)
+        df.to_csv("arm_reachability_down.csv", index=False)  # ee orientation is always down
