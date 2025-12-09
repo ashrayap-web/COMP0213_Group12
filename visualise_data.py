@@ -19,10 +19,10 @@ def plot_csv_data(ax, csv_file):
         ax: Matplotlib 3D axis to plot on
         csv_file: Path to the CSV file
     """
-    # Read the CSV file
+    
     df = pd.read_csv(csv_file)
     
-    # Separate successful and failed grasps
+    
     success = df[df['Result'] == 1.0]
     failure = df[df['Result'] == 0.0]
     
@@ -36,8 +36,8 @@ def plot_csv_data(ax, csv_file):
             x, y, z = row['x'], row['y'], row['z']
             # Calculate direction towards origin
             length = np.sqrt(x**2 + y**2 + z**2)
-            if length > 0:  # Avoid division by zero
-                # Scale arrow to be 10% of distance to origin
+            if length > 0:  
+                
                 scale = 0.1
                 dx, dy, dz = -x * scale, -y * scale, -z * scale
                 ax.quiver(x, y, z, dx, dy, dz, 
@@ -53,17 +53,17 @@ def plot_csv_data(ax, csv_file):
             x, y, z = row['x'], row['y'], row['z']
             # Calculate direction towards origin
             length = np.sqrt(x**2 + y**2 + z**2)
-            if length > 0:  # Avoid division by zero
-                # Scale arrow to be 10% of distance to origin
+            if length > 0:  
+    
                 scale = 0.1
                 dx, dy, dz = -x * scale, -y * scale, -z * scale
                 ax.quiver(x, y, z, dx, dy, dz, 
                          color='darkred', alpha=0.3, arrow_length_ratio=0.3)
     
-    # Plot origin point (object)
+    
     ax.scatter([0], [0], [0], c='blue', marker='s', s=20, label='Object')
     
-    # Set labels and title
+    
     ax.set_xlabel('X')
     ax.set_ylabel('Y')
     ax.set_zlabel('Z')
@@ -104,7 +104,7 @@ def visualize_all_csv_files():
     for csv_file in csv_files:
         print(f"  - {csv_file}")
     
-    # Create a single figure with subplots (2x2 grid)
+    
     fig = plt.figure(figsize=(16, 14))
     
     # Create plots for each CSV file
@@ -113,7 +113,7 @@ def visualize_all_csv_files():
         print(f"\nProcessing {csv_file}...")
         
         try:
-            # Create subplot (2 rows, 2 columns)
+            
             ax = fig.add_subplot(2, 2, idx + 1, projection='3d')
             plot_csv_data(ax, csv_path)
             
@@ -122,12 +122,12 @@ def visualize_all_csv_files():
     
     plt.tight_layout()
     
-    # Save the combined figure
+    
     output_filename = "visualisation_all_data.png"
     fig.savefig(output_filename, dpi=150, bbox_inches='tight')
     print(f"\nSaved combined visualization to {output_filename}")
     
-    # Show the plot
+    
     plt.show()
 
 

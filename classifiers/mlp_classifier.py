@@ -56,13 +56,12 @@ class MLPClassifier(BaseClassifier):
             X_temp, y_temp, test_size=0.5, stratify=y_temp, random_state=42
         )
         
-        # Feature normalization
+        # Feature normalisation
         self.scaler = StandardScaler()
         X_train_scaled = self.scaler.fit_transform(X_train)
         X_val_scaled = self.scaler.transform(X_val)
         X_test_scaled = self.scaler.transform(X_test)
         
-        # Convert to PyTorch tensors
         X_train_t = torch.tensor(X_train_scaled, dtype=torch.float32)
         y_train_t = torch.tensor(y_train.values, dtype=torch.float32).view(-1, 1)
         X_val_t = torch.tensor(X_val_scaled, dtype=torch.float32)
@@ -70,14 +69,14 @@ class MLPClassifier(BaseClassifier):
         X_test_t = torch.tensor(X_test_scaled, dtype=torch.float32)
         y_test_t = torch.tensor(y_test.values, dtype=torch.float32).view(-1, 1)
         
-        # Create data loaders
+        
         train_data = TensorDataset(X_train_t, y_train_t)
         val_data = TensorDataset(X_val_t, y_val_t)
         
         train_loader = DataLoader(train_data, batch_size=self.batch_size, shuffle=True)
         val_loader = DataLoader(val_data, batch_size=self.batch_size, shuffle=False)
         
-        # Initialize model
+        
         self.nn_model = MLP(X_train_t.shape[1])
         criterion = nn.BCELoss()
         optimizer = optim.Adam(self.nn_model.parameters(), lr=self.lr, weight_decay=1e-4)
