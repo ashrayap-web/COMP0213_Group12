@@ -7,7 +7,9 @@ A modular PyBullet-based simulation system for robotic grasp experiments with ma
 ```
 COMP0213_Group12/
 ├── main.py                      # Main entry point with CLI
-├── objects/                     # Object definitions
+├── visualise_data.py            # Grasping visualisation script 
+├── requirements.txt             # Python package dependencies
+├── objects/                     # Object (cube/cylinder) definitions
 │   ├── __init__.py
 │   └── sim_objects.py          # SimObject, CubeObject, CylinderObject
 ├── grippers/                    # Gripper implementations
@@ -19,7 +21,8 @@ COMP0213_Group12/
 │   ├── __init__.py
 │   ├── base_classifier.py      # BaseClassifier abstract class
 │   ├── logistic_classifier.py  # Logistic Regression classifier
-│   └── mlp_classifier.py       # MLP Neural Network classifier
+│   └── mlp_classifier.py       # MLP Neural Network classifier (saves best model)
+├── best_model.pth               # Saved best MLP model weights (auto-generated)
 ├── simulation/                  # Simulation logic
 │   ├── __init__.py
 │   └── grasp_simulation.py     # run_grasp_trial, trainloop, testphaseloop
@@ -143,10 +146,11 @@ python main.py test --object cylinder --gripper pr2
 1. Loads existing training data from CSV file
 2. Trains the specified classifier (Logistic Regression or MLP)
 3. Displays training/validation metrics
-4. Runs 10 new grasp trials in simulation
-5. Predicts success/failure for each trial
-6. Compares predictions against actual outcomes
-7. Reports accuracy of predictions
+4. For MLP: Saves best model based on validation loss to `best_model.pth`
+5. Runs 10 new grasp trials in simulation
+6. Predicts success/failure for each trial
+7. Compares predictions against actual outcomes
+8. Reports accuracy of predictions
 
 ### 3. Getting Help
 
@@ -201,7 +205,7 @@ python main.py test --help
 ### Classifier Types
 
 - **Logistic Regression** (`--classifier logistic`): Polynomial features with L2 regularization
-- **MLP** (`--classifier mlp`): Multi-layer perceptron neural network
+- **MLP** (`--classifier mlp`): Multi-layer perceptron neural network with validation-based early stopping (saves best model to `best_model.pth`)
 
 ## Module Overview
 
@@ -218,7 +222,7 @@ python main.py test --help
 ### Classifiers (`classifiers/`)
 - `BaseClassifier`: Abstract classifier with data loading utilities
 - `LogisticRegressionClassifier`: Polynomial logistic regression
-- `MLPClassifier`: PyTorch-based neural network
+- `MLPClassifier`: PyTorch-based neural network with best model saving
 
 ### Simulation (`simulation/`)
 - `run_grasp_trial()`: Execute single grasp attempt
