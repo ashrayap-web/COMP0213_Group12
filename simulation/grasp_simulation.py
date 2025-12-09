@@ -58,7 +58,7 @@ def run_grasp_trial(i, object_choice="cylinder", gripper_choice="pr2", gripper_u
         #time.sleep(1./240.)
 
     curr_gripper.close_gripper()
-    for _ in range(350): 
+    for _ in range(750): 
         p.stepSimulation()
         #time.sleep(1./240.)
 
@@ -96,7 +96,7 @@ def trainloop(object_choice="cylinder", gripper_choice="pr2", gripper_urdf="pr2_
     p.setPhysicsEngineParameter(numSolverIterations=300, erp=0.3, contactERP=0.3)
 
     n = 10000
-    target_samples = 500
+    target_samples = 200
     count1 = 0
     count0 = 0
     data_rows = []

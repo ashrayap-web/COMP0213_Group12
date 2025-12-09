@@ -82,6 +82,10 @@ class MLPClassifier(BaseClassifier):
         criterion = nn.BCELoss()
         optimizer = optim.Adam(self.nn_model.parameters(), lr=self.lr, weight_decay=1e-4)
         
+        # Best model tracking
+        best_val_loss = float('inf')
+        best_model_epoch = 0
+        
         # Training loop
         print("\nTraining MLP classifier...")
         
@@ -110,13 +114,23 @@ class MLPClassifier(BaseClassifier):
                     preds_cls = (outputs > 0.5).float()
                     correct_preds += preds_cls.eq(y_batch).sum().item()
             
+            avg_val_loss = val_loss / len(val_loader.dataset)
+            
             if (epoch + 1) % 50 == 0:
                 print(f"Epoch: {(epoch+1)}/{self.epochs}   "
                       f"Train Loss: {train_loss/len(train_loader.dataset):.4f}   "
                       f"Val Accuracy: {100*correct_preds/len(val_loader.dataset):.2f}% -> {correct_preds}/{len(val_loader.dataset)}   "
-                      f"Val Loss: {val_loss/len(val_loader.dataset):.4f}")
+                      f"Val Loss: {avg_val_loss:.4f}")
+            
+            # Save best model
+            if avg_val_loss < best_val_loss:
+                best_val_loss = avg_val_loss
+                torch.save(self.nn_model.state_dict(), 'best_model.pth')
+                best_model_epoch = epoch
         
-        # Test accuracy
+        # Load best model for testing
+        print(f"Loading best model from epoch {best_model_epoch + 1}")
+        self.nn_model.load_state_dict(torch.load('best_model.pth'))
         self.nn_model.eval()
         with torch.no_grad():
             preds = self.nn_model(X_test_t)

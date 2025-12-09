@@ -18,7 +18,7 @@ class SimObject:
 class CubeObject(SimObject):
     """Cube object for grasping"""
     
-    def __init__(self, name, urdf_file="cube_small.urdf", pos=None, orientation=None, scale=1.0):
+    def __init__(self, name, urdf_file="cube_small.urdf", pos=None, orientation=None, scale=1.3):
         super().__init__(name, urdf_file, pos, orientation, scale)
 
 
