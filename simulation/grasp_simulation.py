@@ -39,7 +39,7 @@ def run_grasp_trial(i, object_choice="cylinder", gripper_choice="pr2", gripper_u
 
     for _ in range(50): 
         p.stepSimulation()
-        time.sleep(1./240.)
+        #time.sleep(1./240.)
 
     # Choose the gripper
     if gripper_choice == "threefinger":
@@ -50,17 +50,17 @@ def run_grasp_trial(i, object_choice="cylinder", gripper_choice="pr2", gripper_u
     curr_gripper.open_gripper()
     for _ in range(50): 
         p.stepSimulation()
-        time.sleep(1./240.)
+        #time.sleep(1./240.)
 
     curr_gripper.move_towards_obj()
     for _ in range(80): 
         p.stepSimulation()
-        time.sleep(1./240.)
+        #time.sleep(1./240.)
 
     curr_gripper.close_gripper()
     for _ in range(350): 
         p.stepSimulation()
-        time.sleep(1./240.)
+        #time.sleep(1./240.)
 
     current_obj.pos_grab_before, _ = p.getBasePositionAndOrientation(current_obj.body_id)
 
@@ -69,11 +69,11 @@ def run_grasp_trial(i, object_choice="cylinder", gripper_choice="pr2", gripper_u
     curr_gripper.move_gripper(x, y, z + 0.3)
     for _ in range(50): 
         p.stepSimulation()
-        time.sleep(1./240.)
+        #time.sleep(1./240.)
 
     for _ in range(120): 
         p.stepSimulation()
-        time.sleep(1./240.)
+        #time.sleep(1./240.)
 
     current_obj.pos_grab_after, _ = p.getBasePositionAndOrientation(current_obj.body_id)
     curr_gripper.grab_end_pos, _ = p.getBasePositionAndOrientation(curr_gripper.body_id)
@@ -81,7 +81,7 @@ def run_grasp_trial(i, object_choice="cylinder", gripper_choice="pr2", gripper_u
     result = curr_gripper.is_success()
     for _ in range(50): 
         p.stepSimulation()
-        time.sleep(1./240.)
+        #time.sleep(1./240.)
 
     return result, curr_gripper, current_obj
 
@@ -96,7 +96,7 @@ def trainloop(object_choice="cylinder", gripper_choice="pr2", gripper_urdf="pr2_
     p.setPhysicsEngineParameter(numSolverIterations=300, erp=0.3, contactERP=0.3)
 
     n = 10000
-    target_samples = 150
+    target_samples = 500
     count1 = 0
     count0 = 0
     data_rows = []

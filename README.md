@@ -75,7 +75,7 @@ The main entry point is `main.py`, which provides two primary modes:
 
 ### 1. Dataset Generation (Training Mode)
 
-Generate training data through simulation. This mode runs grasp trials and collects position, orientation, and success/failure data.
+Generate training data through simulation. This mode runs grasp trials and collects position, orientation, and success/failure data. NOTE: PLEASE UNCOMMENT THE Time.Sleep() commands if you want to see the grasping visually (removed it to fasten the generation processs).
 
 **Syntax:**
 ```bash
