@@ -68,6 +68,10 @@ def test_command(args):
     gripper_config = GRIPPER_CONFIGS[args.gripper]
     csvfile = get_csv_filename(args.gripper, args.object)
     
+    # Use special dataset for PR2 + cube + MLP combination as it requires more dat.
+    if args.gripper == "pr2" and args.object == "cube" and args.classifier == "mlp":
+        csvfile = "data/pr2_gripper_cube_mlp.csv"
+    
     print(f"\n{'='*60}")
     print(f"TEST MODE: Evaluating classifier")
     print(f"{'='*60}")
