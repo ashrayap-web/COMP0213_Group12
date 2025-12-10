@@ -85,7 +85,7 @@ class MLP(nn.Module):
 
 model = MLP(X_train.shape[1]) # num features in X_train
 criterion = nn.BCELoss()
-optimizer = optim.AdamW(model.parameters(), lr=0.001, weight_decay=1e-4) #weight_decay=5e-4
+optimizer = optim.AdamW(model.parameters(), lr=0.001, weight_decay=1e-4) 
 
 best_val_loss = float('inf')
 epochs = 200
